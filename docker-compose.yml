@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+
+  db:
+    image: postgres
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: headbendover
+      POSTGRES_PASSWORD: raisetheposterior
+      POSTGRES_DB: spaak
+    ports:
+      - 5432:5432
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    depends_on:
+      - db
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pickle@rick.me
+      PGADMIN_DEFAULT_PASSWORD: legrick
+    ports:
+      - 8080:80
