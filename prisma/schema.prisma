@@ -15,34 +15,34 @@ datasource db {
 
 model LegislativeProposal {
   id                      Int       @id
-  typeId                  Int
-  kategoriId              Int
-  statusId                Int
+  typeid                  Int
+  kategoriid              Int?
+  statusid                Int
   titel                   String
-  titelKort               String
-  offentlighedsKode       String
+  titelkort               String
+  offentlighedskode       String
   nummer                  String
-  nummerPrefix            String
-  nummerNumerisk          String
-  nummerPostfix           String?
+  nummerprefix            String
+  nummernumerisk          String
+  nummerpostfix           String?
   resume                  String
-  afstemningsKonklusion   String?
-  periodeId               Int
-  afgoerelsesResultatKode String?
-  baggrundsMateriale      String?
-  opdateringsDato         DateTime
-  statsBudgetSag          Boolean
+  afstemningskonklusion   String?
+  periodeid               Int
+  afgoerelsesresultatkode String?
+  baggrundsmateriale      String?
+  opdateringsdato         DateTime
+  statsbudgetsag          Boolean
   begrundelse             String?
-  paragrafNummer          String?
+  paragrafnummer          String?
   paragraf                String?
-  afgoerelsesDato         DateTime?
+  afgoerelsesdato         DateTime?
   afgoerelse              String?
-  raadsmodeDato           DateTime?
-  lovNummer               String
-  lovNummerDato           DateTime
-  retsinformationsUrl     String?
-  fremsatUnderSagId       Int?
-  deltUnderSagId          Int?
+  raadsmodedato           DateTime?
+  lovnummer               String?
+  lovnummerdato           DateTime
+  retsinformationsurl     String?
+  fremsatundersagid       Int?
+  deltundersagid          Int?
 
   @@map("legislative-proposal")
 }
