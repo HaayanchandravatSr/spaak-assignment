@@ -8,6 +8,11 @@ export type LegislativeProposalPrimitive = Omit<LegislativeProposal, 'afgoerelse
   rådsmødedato?: Date | null;
 };
 
+export type LegislativeProposalsGroupedByStatusId = {
+  statusId: number;
+  proposals: LegislativeProposalPrimitive[]
+}[];
+
 export type GetLegislativeProposalsResponse = {
   'odata.metadata': string;
   value: LegislativeProposalPrimitive[];
