@@ -1,4 +1,4 @@
-import { GetLegislativeProposalsResponse, LegislativeProposalPrimitive, mapPrimitiveToProposal } from "@/@types/proposal";
+import { GetLegislativeProposalsResponse, LegislativeProposalPrimitive, mapPrimitiveToProposal } from "../types/proposal";
 import { PrismaClient } from '@prisma/client';
 
 /**

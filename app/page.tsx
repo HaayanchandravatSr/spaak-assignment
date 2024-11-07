@@ -1,23 +1,14 @@
-"use client"
-
-import { trpc } from "../utils/trpc";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useState } from "react";
-import { httpBatchLink } from "@trpc/client";
+import Header from "@/components/Header";
+import Board from "@/components/Board/Board";
+import { HydrateClient, trpc } from "@/trpc/server";
 
 export default function Home() {
-  const [queryClient] = useState(() => new QueryClient());
-  const [trpcClient] = useState(() =>
-    trpc.createClient({
-      links: [httpBatchLink({ url: '/api/trpc'})]
-    })
-  );
-
+  void trpc.getProposals.prefetch();
+  
   return (
-    <QueryClientProvider client={queryClient}>
-      <trpc.Provider queryClient={queryClient} client={trpcClient}>
-        <div className="text-white">KANBAN</div>
-      </trpc.Provider>
-    </QueryClientProvider>
+    <HydrateClient>
+      <Header />
+      <Board />
+    </HydrateClient>
   );
 }

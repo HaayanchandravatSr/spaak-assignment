@@ -1,25 +1,11 @@
-import { mapProposalToPrimitive } from '@/@types/proposal';
-import { PrismaClient } from '@prisma/client';
-import { initTRPC } from '@trpc/server';
-import { NextResponse } from 'next/server';
+import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
+import { trpcRouter } from '@/trpc/routers/_app';
 
-const prisma = new PrismaClient();
-const { createCallerFactory, router, procedure } = initTRPC.create();
-
-const trpcRouter = router({
-  getProposals: procedure
-    .query(async () => {
-      const proposals = await prisma.legislativeProposal.findMany();
-
-      return proposals.map(mapProposalToPrimitive)
-    })
-});
-
-export type TrpcRouter = typeof trpcRouter;
-
-const createCaller = createCallerFactory(trpcRouter);
-const caller = createCaller({});
-
-export async function GET() {
-  return NextResponse.json(await caller.getProposals());
-}
+const handler = (req: Request) =>
+  fetchRequestHandler({
+    endpoint: '/api/trpc',
+    req,
+    router: trpcRouter,
+    createContext: () => ({}),
+  });
+export { handler as GET, handler as POST };

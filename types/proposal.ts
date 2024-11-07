@@ -1,10 +1,11 @@
 import { LegislativeProposal } from "@prisma/client";
 import { omit } from 'lodash';
 
-export type LegislativeProposalPrimitive = Omit<LegislativeProposal, 'afgoerelsesresultatkode' | 'afgoerelsesdato' | 'afgoerelse'> & {
+export type LegislativeProposalPrimitive = Omit<LegislativeProposal, 'afgoerelsesresultatkode' | 'afgoerelsesdato' | 'afgoerelse' | 'raadsmodedato'> & {
   afgørelsesresultatkode?: string | null;
   afgørelsesdato?: Date | null;
   afgørelse?: string | null;
+  rådsmødedato?: Date | null;
 };
 
 export type GetLegislativeProposalsResponse = {
@@ -27,8 +28,11 @@ export const mapProposalToPrimitive = (proposal: LegislativeProposal) => {
 
 export const mapPrimitiveToProposal = (primitive: LegislativeProposalPrimitive) => {
   const mappedObject: LegislativeProposal = {
-    ...omit(primitive, ['afgørelse', 'afgørelsesdato', 'afgørelsesresultatkode']),
-      
+    ...omit(primitive, ['afgørelse', 'afgørelsesdato', 'afgørelsesresultatkode', 'rådsmødedato']),
+    
+    opdateringsdato: new Date(primitive.opdateringsdato),
+    raadsmodedato: primitive.rådsmødedato ? new Date(primitive.rådsmødedato) : null,
+    lovnummerdato: new Date(primitive.lovnummerdato),
     afgoerelse: primitive.afgørelse ?? null,
     afgoerelsesdato: primitive.afgørelsesdato ? new Date(primitive.afgørelsesdato) : null,
     afgoerelsesresultatkode: primitive.afgørelsesresultatkode?? null,
