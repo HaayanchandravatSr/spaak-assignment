@@ -18,7 +18,7 @@ npm run dev
 
 This command does a few things:
 
-1. It registers a chutdown callback for when the process is stopped (CTRL+C) in order to also take down the docker containers, so they don't consume resources while you're not developing and also to release the occupied ports.
+1. It registers a shutdown callback for when the process is stopped (CTRL+C) in order to also take down the docker containers, so they don't consume resources while you're not developing and also to release the occupied ports.
 2. It spins up the docker containers by calling `docker-compose up`.
 3. Even though it waits for the containers to be Healthy, that doesn't mean the services inside have been spun up completely yet, so the process waits 10 seconds for that to happen.
 4. It generates Prisma types and runs `npx prisma migrate dev` to get the database in the right structure.
