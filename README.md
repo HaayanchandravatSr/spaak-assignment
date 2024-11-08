@@ -1,6 +1,6 @@
 ## Description
 
-This is the repo for the Spaak technical assessment. This is a self contained repo that runs locally without dependencies by means of Docker. There is a `docker-compose.yml` in the root defining a db (postgres) and pgAdmin for visual access. Frontend and Backend are created by using NextJS/React/TypeScript. For backend communication Spaak preferred tRPC, so the NExtJS project has been decked out with a tRPC Router. Prisma ORM is used as a mapper between the backend and the database.
+This is the repo for the Spaak technical assessment. This is a self contained repo that runs locally without dependencies by means of Docker. There is a `docker-compose.yml` in the root defining a db (postgres) and pgAdmin for visual access. Frontend and Backend are created by using NextJS/React/TypeScript. For backend communication Spaak preferred tRPC, so the NextJS project has been decked out with a tRPC Router. Prisma ORM is used as a mapper between the backend and the database.
 
 ## Getting Started
 
