@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Description
+
+This is the repo for the Spaak technical assessment. This is a self contained repo that runs locally without dependencies by means of Docker. There is a `docker-compose.yml` in the root defining a db (postgres) and pgAdmin for visual access. Frontend and Backend are created by using NextJS/React/TypeScript. For backend communication Spaak preferred tRPC, so the NExtJS project has been decked out with a tRPC Router. Prisma ORM is used as a mapper between the backend and the database.
 
 ## Getting Started
 
-First, run the development server:
+First, create a `.env` file with the following entry:
+
+```
+DATABASE_URL="postgresql://headbendover:raisetheposterior@localhost:5432/spaak?schema=public"
+```
+
+Then, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This command does a few things:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. It registers a chutdown callback for when the process is stopped (CTRL+C) in order to also take down the docker containers, so they don't consume resources while you're not developing and also to release the occupied ports.
+2. It spins up the docker containers by calling `docker-compose up`.
+3. Even though it waits for the containers to be Healthy, that doesn't mean the services inside have been spun up completely yet, so the process waits 10 seconds for that to happen.
+4. It generates Prisma types and runs `npx prisma migrate dev` to get the database in the right structure.
+5. Then it runs `npx prisma db seed` to seed the database. It tries to fetch the required data in realtime, but relies on a backup file to keep running for demonstration purposes. This is only in case there is an unavoidable issue, such as a lack of internet connection or the upstream API not being available or faulty.
+6. Finally, it runs `next dev` to spin up the NextJS project.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### To see the Frontend
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the resulting NextJS frontend, fetching and showing the proposals.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### To view the database
+1. Open [http://localhost:8080](http://localhost:8080)
+2. Login credentials are pickle@rick.me/legrick as user/password
+3. Right-click Servers and register a new server
+4. In the resulting dialog, on the first tab choose a name of your choice (Spaak sounds like a reasonable name)
+5. On the second tab, enter `db` as Host name/address, `spaak` as Maintenance database, `headbendover` as Username and `raisetheposterior` as Password
+6. Click Apply and you should be connected to the database.

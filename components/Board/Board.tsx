@@ -4,6 +4,7 @@ import { trpc } from "@/trpc/client";
 import { LegislativeProposalsGroupedByStatusId } from "@/types/proposal";
 import { useEffect, useState } from "react";
 import Column from "./Column";
+import { GiShipWheel } from "react-icons/gi";
 
 const Board: React.FC = () => {
   const [groupedProposals, setGroupedProposals] = useState<LegislativeProposalsGroupedByStatusId>();
@@ -31,7 +32,11 @@ const Board: React.FC = () => {
 
   return (
     <div className="h-[calc(100vh-5rem)] p-8 md:pb-0 overflow-x-scroll flex gap-8">
-      {isLoading && 'LOADING...'}
+      {isLoading && (
+        <div className="w-full h-full flex justify-center items-center">
+          <GiShipWheel className="w-24 h-24 animate-spin" />
+        </div>
+      )}
 
       {!isLoading && groupedProposals && (
         groupedProposals.map(gp => <Column key={gp.statusId} title={gp.statusId.toString()} proposals={gp.proposals} />)
